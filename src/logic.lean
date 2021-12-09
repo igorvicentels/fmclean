@@ -26,13 +26,9 @@ theorem doubleneg_law :
   ¬¬P ↔ P  :=
 begin
   split,
-  intro not_not_p,
-  by_contra not_p,
-  exact not_not_p(not_p),
+  exact doubleneg_elim P,
 
-  intro p,
-  intro not_p,
-  exact not_p(p),
+  exact doubleneg_intro P,
 end
 
 ------------------------------------------------
@@ -133,14 +129,7 @@ end
 theorem lem_irrefutable :
   ¬¬(P∨¬P)  :=
 begin
-  intro h,
-
-  apply h,
-
-
-
-
-
+  sorry,
 end
 
 
