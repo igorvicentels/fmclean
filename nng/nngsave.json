@@ -424,15 +424,17 @@
     },
     {
       "lean": "theorem not_succ_le_self (a : mynat) : ¬ (succ a ≤ a) :=\n",
-      "editorText": "intro h,\r\ncases h with k hk,\r\ninduction k with d hd,\r\nrw add_zero at hk,\r\nhave h1 := ne_succ_self a,\r\ncontradiction,\r\n\r\n\r\n"
+      "isSolved": true,
+      "editorText": "intro h,\r\ninduction a with d hd,\r\nhave h1 := le_zero (succ 0),\r\nhave h2 := h1 h,\r\nhave h3 := succ_ne_zero 0,\r\ncontradiction,\r\n\r\nhave h4 := le_of_succ_le_succ (succ d) d,\r\nexact hd (h4 h),\r\n\r\n"
     },
     {
       "lean": "theorem add_le_add_left {a b : mynat} (h : a ≤ b) (t : mynat) :\n  t + a ≤ t + b :=\n",
-      "editorText": "sorry"
+      "isSolved": true,
+      "editorText": "induction t with d hd,\r\nrepeat{rw zero_add},\r\nexact h,\r\n\r\ncases hd with k hk,\r\nuse k,\r\nrepeat{rw succ_add},\r\nrw hk,\r\nrefl,\r\n"
     },
     {
       "lean": "lemma lt_aux_one (a b : mynat) : a ≤ b ∧ ¬ (b ≤ a) → succ a ≤ b :=\n",
-      "editorText": "sorry"
+      "editorText": "intro h,\r\ncases h,\r\ncases h_left with u hu,\r\ncases u with u',\r\nuse 0,\r\n\r\n\r\n"
     },
     {
       "lean": "lemma lt_aux_two (a b : mynat) : succ a ≤ b → a ≤ b ∧ ¬ (b ≤ a) :=\n",
