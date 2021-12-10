@@ -130,6 +130,7 @@ theorem lem_irrefutable :
   ¬¬(P∨¬P)  :=
 begin
   sorry,
+
 end
 
 
@@ -141,6 +142,7 @@ theorem peirce_law_weak :
   ((P → Q) → P) → ¬¬P  :=
 begin
   sorry,
+
   
 end
 
