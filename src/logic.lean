@@ -110,15 +110,9 @@ theorem contrapositive_law :
   (P → Q) ↔ (¬Q → ¬P)  :=
 begin
   split,
-  intros p_imp_q not_q,
-  by_contra p,
-  have q := p_imp_q(p),
-  exact not_q(q),
+  exact impl_as_contrapositive P Q,
 
-  intros not_q_imp_not_p p,
-  by_contra not_q,
-  have not_p := not_q_imp_not_p(not_q),
-  exact not_p(p),
+  exact impl_as_contrapositive_converse P Q,
 end
 
 
@@ -130,10 +124,14 @@ theorem lem_irrefutable :
   ¬¬(P∨¬P)  :=
 begin
   intro h1,
-  by_cases P,
-  have x := h1,
-  
+  apply h1,
+  right,
+  intro h2,
+  have p_or_not_p : (P ∨ ¬P),
+  left,
+  exact h2,
 
+  exact h1 p_or_not_p,
 end
 
 
@@ -144,9 +142,13 @@ end
 theorem peirce_law_weak :
   ((P → Q) → P) → ¬¬P  :=
 begin
-  sorry,
-
-  
+  intro h1,
+  intro not_p,
+  apply not_p,
+  apply h1,
+  intro p,
+  exfalso,
+  exact not_p p, 
 end
 
 
@@ -157,13 +159,25 @@ end
 theorem disj_as_negconj :
   P∨Q → ¬(¬P∧¬Q)  :=
 begin
-  sorry,
+  intro p_or_q,
+  intro h1,
+  cases h1 with not_p not_q,
+  cases p_or_q with p q,
+  exact not_p p,
+
+  exact not_q q,
 end
 
 theorem conj_as_negdisj :
   P∧Q → ¬(¬P∨¬Q)  :=
 begin
-  sorry,
+  intro p_and_q,
+  intro h1,
+  cases p_and_q with p q,
+  cases h1 with not_p not_q,
+  exact not_p p,
+
+  exact not_q q,
 end
 
 
@@ -174,19 +188,41 @@ end
 theorem demorgan_ndisj :
   ¬(P∨Q) → (¬P ∧ ¬Q)  :=
 begin
-  sorry,
+  intro h,
+  split,
+  intro p,
+  apply h,
+  left,
+  exact p,
+
+  intro q,
+  apply h,
+  right,
+  exact q,
 end
 
 theorem demorgan_ndisj_converse :
   (¬P ∧ ¬Q) → ¬(P∨Q)  :=
 begin
-  sorry,
+  intro not_p_and_not_q,
+  intro p_or_q,
+  cases not_p_and_not_q with not_p not_q,
+  cases p_or_q with p q,
+  exact not_p p,
+  exact not_q q,
 end
 
 theorem demorgan_nconj_converse :
   (¬Q ∨ ¬P) → ¬(P∧Q)  :=
 begin
-  sorry,
+  intro not_q_or_not_p,
+  intro p_or_q,
+  cases not_q_or_not_p with not_q not_p,
+  cases p_or_q with p q,
+  exact not_q q,
+  
+  cases p_or_q with p q,
+  exact not_p p,
 end
 
 
