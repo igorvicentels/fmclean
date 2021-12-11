@@ -129,7 +129,10 @@ end
 theorem lem_irrefutable :
   ¬¬(P∨¬P)  :=
 begin
-  sorry,
+  intro h1,
+  by_cases P,
+  have x := h1,
+  
 
 end
 

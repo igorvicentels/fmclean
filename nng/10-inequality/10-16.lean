@@ -1,0 +1,12 @@
+intro h,
+split,
+cases h with k hk,
+use (succ k),
+rw add_succ,
+rw succ_add at hk,
+exact hk,
+
+intro h1,
+have h2 := le_trans (succ a) b a h h1,
+have h3 := not_succ_le_self a,
+exact h3 h2,

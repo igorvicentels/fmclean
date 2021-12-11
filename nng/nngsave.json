@@ -410,7 +410,7 @@
     {
       "lean": "lemma le_succ_self (a : mynat) : a ≤ succ a :=\n",
       "isSolved": true,
-      "editorText": "use 1,\r\nrw succ_eq_add_one,\r\nrefl,\r\n"
+      "editorText": "use 1,\r\nrefl,\r\n"
     },
     {
       "lean": "theorem add_le_add_right {a b : mynat} : a ≤ b → ∀ t, (a + t) ≤ (b + t) :=\n",
@@ -434,15 +434,18 @@
     },
     {
       "lean": "lemma lt_aux_one (a b : mynat) : a ≤ b ∧ ¬ (b ≤ a) → succ a ≤ b :=\n",
-      "editorText": "intro h,\r\ncases h,\r\ncases h_left with u hu,\r\ncases u with u',\r\nuse 0,\r\n\r\n\r\n"
+      "isSolved": true,
+      "editorText": "intro h,\r\ncases h,\r\ncases h_left with k hk,\r\ncases k with k',\r\nrw add_zero at hk,\r\nexfalso,\r\napply h_right,\r\nuse 0,\r\nrw add_zero,\r\nsymmetry,\r\nexact hk,\r\n\r\nuse k',\r\nrw succ_add,\r\nrw add_succ at hk,\r\nexact hk,\r\n\r\n\r\n\r\n"
     },
     {
       "lean": "lemma lt_aux_two (a b : mynat) : succ a ≤ b → a ≤ b ∧ ¬ (b ≤ a) :=\n",
-      "editorText": "sorry"
+      "isSolved": true,
+      "editorText": "intro h,\r\nsplit,\r\ncases h with k hk,\r\nuse (succ k),\r\nrw add_succ,\r\nrw succ_add at hk,\r\nexact hk,\r\n\r\nintro h1,\r\nhave h2 := le_trans (succ a) b a h h1,\r\nhave h3 := not_succ_le_self a,\r\nexact h3 h2,\r\n"
     },
     {
       "lean": "lemma lt_iff_succ_le (a b : mynat) : a < b ↔ succ a ≤ b :=\n",
-      "editorText": "sorry"
+      "isSolved": true,
+      "editorText": "split,\r\nexact lt_aux_one a b,\r\n\r\nexact lt_aux_two a b,"
     }
   ]
 }
