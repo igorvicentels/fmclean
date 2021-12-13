@@ -470,13 +470,19 @@ end
 theorem demorgan_exists_law :
   (∃x, ¬P x) ↔ ¬(∀x, P x)  :=
 begin
-  sorry,
+  split,
+  exact demorgan_exists_neg U P,
+
+  exact demorgan_neg_forall U P,
 end
 
 theorem demorgan_forall_law :
   (∀x, ¬P x) ↔ ¬(∃x, P x)  :=
 begin
-  sorry,
+  split,
+  exact demorgan_forall_neg U P,
+
+  exact demorgan_neg_exists U P,
 end
 
 
@@ -487,37 +493,63 @@ end
 theorem exists_as_neg_forall :
   (∃x, P x) → ¬(∀x, ¬P x)  :=
 begin
-  sorry,
+  intro h1,
+  intro h2,
+  cases h1 with u p_u,
+  have neg_p_u := h2 u,
+  exact neg_p_u p_u,
 end
 
 theorem forall_as_neg_exists :
   (∀x, P x) → ¬(∃x, ¬P x)  :=
 begin
-  sorry,
+  intro h1,
+  intro h2,
+  cases h2 with u neg_p_u,
+  have p_u := h1 u,
+  exact neg_p_u p_u,
 end
 
 theorem forall_as_neg_exists_converse :
   ¬(∃x, ¬P x) → (∀x, P x)  :=
 begin
-  sorry,
+  intro h1,
+  intro u,
+  by_contradiction hboom,
+  apply h1,
+  existsi u,
+  exact hboom,
 end
 
 theorem exists_as_neg_forall_converse :
   ¬(∀x, ¬P x) → (∃x, P x)  :=
 begin
-  sorry,
+  intro h1,
+  by_contradiction h2,
+  apply h1,
+  intro u,
+  intro p_u,
+  apply h2,
+  existsi u,
+  exact p_u,
 end
 
 theorem forall_as_neg_exists_law :
   (∀x, P x) ↔ ¬(∃x, ¬P x)  :=
 begin
-  sorry,
+  split,
+  exact forall_as_neg_exists U P,
+
+  exact forall_as_neg_exists_converse U P,
 end
 
 theorem exists_as_neg_forall_law :
   (∃x, P x) ↔ ¬(∀x, ¬P x)  :=
 begin
-  sorry,
+  split,
+  exact exists_as_neg_forall U P,
+
+  exact exists_as_neg_forall_converse U P,
 end
 
 
