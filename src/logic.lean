@@ -1,3 +1,4 @@
+
 section propositional
 
 variables P Q R : Prop
@@ -185,7 +186,7 @@ end
 -- As leis de De Morgan para ∨,∧:
 ------------------------------------------------
 
-theorem demorgan_ndisj :
+theorem demorgan_disj :
   ¬(P∨Q) → (¬P ∧ ¬Q)  :=
 begin
   intro h,
@@ -201,7 +202,7 @@ begin
   exact q,
 end
 
-theorem demorgan_ndisj_converse :
+theorem demorgan_disj_converse :
   (¬P ∧ ¬Q) → ¬(P∨Q)  :=
 begin
   intro not_p_and_not_q,
@@ -212,7 +213,24 @@ begin
   exact not_q q,
 end
 
-theorem demorgan_nconj_converse :
+theorem demorgan_conj :
+  ¬(P∧Q) → (¬Q ∨ ¬P)  :=
+begin
+  intro h,
+  by_contradiction hboom,
+  apply h,
+  split,
+  by_contradiction not_p,
+  apply hboom,
+  right,
+  exact not_p,
+  by_contradiction not_q,
+  apply hboom,
+  left,
+  exact not_q,
+end
+
+theorem demorgan_conj_converse :
   (¬Q ∨ ¬P) → ¬(P∧Q)  :=
 begin
   intro not_q_or_not_p,
@@ -225,6 +243,23 @@ begin
   exact not_p p,
 end
 
+theorem demorgan_conj_law :
+  ¬(P∧Q) ↔ (¬Q ∨ ¬P)  :=
+begin
+  split,
+  exact demorgan_conj P Q,
+
+  exact demorgan_conj_converse P Q,
+end
+
+theorem demorgan_disj_law :
+  ¬(P∨Q) ↔ (¬P ∧ ¬Q)  :=
+begin
+  split,
+  exact demorgan_disj P Q,
+
+  exact demorgan_disj_converse P Q,
+end
 
 ------------------------------------------------
 -- Proposições de distributividade dos ∨,∧:
@@ -390,10 +425,9 @@ begin
   split,
   exact p,
   exact p,
-
 end
 
-theorem disj_idemp :
+theorem disj_idempot :
   (P∨P) ↔ P  :=
 begin
   split,
@@ -424,17 +458,7 @@ variables P Q : U -> Prop
 -- As leis de De Morgan para ∃,∀:
 ------------------------------------------------
 
-theorem demorgan_exists_neg :
-  (∃x, ¬P x) → ¬(∀x, P x)  :=
-begin
-  intro h,
-  intro f,
-  cases h with u hu,
-  have p_u := f u,
-  exact hu p_u,
-end
-
-theorem demorgan_neg_exists :
+theorem demorgan_exists :
   ¬(∃x, P x) → (∀x, ¬P x)  :=
 begin
   intro h,
@@ -445,7 +469,7 @@ begin
   exact p_u,
 end
 
-theorem demorgan_forall_neg :
+theorem demorgan_exists_converse :
   (∀x, ¬P x) → ¬(∃x, P x)  :=
 begin
   intro h1,
@@ -454,7 +478,7 @@ begin
   exact h1 u hu,
 end
 
-theorem demorgan_neg_forall :
+theorem demorgan_forall :
   ¬(∀x, P x) → (∃x, ¬P x)  :=
 begin
   intro h,
@@ -467,22 +491,32 @@ begin
   exact hboom2,
 end
 
-theorem demorgan_exists_law :
-  (∃x, ¬P x) ↔ ¬(∀x, P x)  :=
+theorem demorgan_forall_converse :
+  (∃x, ¬P x) → ¬(∀x, P x)  :=
 begin
-  split,
-  exact demorgan_exists_neg U P,
-
-  exact demorgan_neg_forall U P,
+  intro h,
+  intro f,
+  cases h with u hu,
+  have p_u := f u,
+  exact hu p_u,
 end
 
 theorem demorgan_forall_law :
-  (∀x, ¬P x) ↔ ¬(∃x, P x)  :=
+  ¬(∀x, P x) ↔ (∃x, ¬P x)  :=
 begin
   split,
-  exact demorgan_forall_neg U P,
+  exact demorgan_forall U P,
 
-  exact demorgan_neg_exists U P,
+  exact demorgan_forall_converse U P,
+end
+
+theorem demorgan_exists_law :
+  ¬(∃x, P x) ↔ (∀x, ¬P x)  :=
+begin
+  split,
+  exact demorgan_exists U P,
+
+  exact demorgan_exists_converse U P,
 end
 
 
@@ -654,13 +688,11 @@ end
 theorem forall_disj_as_disj_forall :
   (∀x, P x ∨ Q x) → (∀x, P x) ∨ (∀x, Q x)  :=
 begin
-  sorry,
 end
 
 theorem exists_conj_as_conj_exists_converse :
   (∃x, P x) ∧ (∃x, Q x) → (∃x, P x ∧ Q x)  :=
 begin
-  sorry,
 end
 
 ---------------------------------------------- -/
