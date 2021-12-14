@@ -1,5 +1,0 @@
-intro h,
-rw not_iff_imp_false at h,
-exfalso,
-cases h with p p_imp_false,
-exact p_imp_false(p),

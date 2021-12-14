@@ -1,7 +1,0 @@
-cases hab with u hu,
-cases hbc with v hv,
-use u+v,
-rw hv,
-rw hu,
-rw add_assoc,
-refl,

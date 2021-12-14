@@ -1,6 +1,0 @@
-cases h with c hc,
-rw le_iff_exists_add,
-use c,
-rw succ_add,
-rw hc,
-refl,
